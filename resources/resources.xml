@@ -1,0 +1,5 @@
+<resources>
+    <fonts>
+        <font id="id_font_helvetica" filename="fonts/helvetica.fnt"/>
+    </fonts>
+</resources>

@@ -1,0 +1,9 @@
+<resources>
+    <bitmap id="LauncherIcon" filename="images/icon.png" />
+    <bitmap id="DoNotDisturbIcon" filename="images/donotdisturb.png" /><bitmap
+    	id="HeartRateIcon" filename="images/heartrate.png">
+</bitmap>
+	<bitmap id="BluetoothIcon" filename="images/bluetooth.png"></bitmap>
+	<bitmap id="NotificationIcon" filename="images/notification.png"></bitmap>
+	<bitmap id="BatteryOutline" filename="images/battery.png"></bitmap>
+</resources>
