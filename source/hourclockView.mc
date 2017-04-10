@@ -135,7 +135,7 @@ class hourclockView extends Ui.WatchFace {
         // dc.drawBitmap( width * 0.75, height / 2 - 15, dndIcon);
 
         // Draw the hour. Convert it to minutes and compute the angle.
-        hourHand = (((clockTime.hour % 24) * 60) + clockTime.min);
+        hourHand = (((clockTime.hour % 24) * 60) /* + clockTime.min*/);
         hourHand = hourHand / (24 * 60.0);
         hourHand = hourHand * Math.PI * 2;
         drawHand(dc, hourHand, 75, 8);
@@ -171,11 +171,11 @@ class hourclockView extends Ui.WatchFace {
 		}
 		var hrIconOffset = 0;
 		if(hr < 100){
-			hrIconOffset = width / 2 -36;
-		} else {
 			hrIconOffset = width / 2 -38;
+		} else {
+			hrIconOffset = width / 2 -40;
 		}
-		dc.drawText(width / 2-10, (height / 2)+20, Gfx.FONT_XTINY, hr, Gfx.TEXT_JUSTIFY_CENTER);
+		dc.drawText(width / 2-12, (height / 2)+20, Gfx.FONT_XTINY, hr, Gfx.TEXT_JUSTIFY_CENTER);
 		dc.drawBitmap(hrIconOffset,(height / 2)+28,hrIcon);
 		var battery = Sys.getSystemStats().battery.toLong();
 		//draw the battery
