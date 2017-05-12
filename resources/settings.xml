@@ -1,0 +1,14 @@
+<settings>
+    <setting propertyKey="snapHours" title="snapHoursDesc">
+   	 	<settingConfig type="boolean" />
+    </setting>
+   	<setting propertyKey="secondsHand" title="secondsHandDesc">
+   		<settingConfig type="boolean" />
+    </setting>
+    <setting propertyKey="digitalTime" title="digitalTimeDesc">
+   		<settingConfig type="boolean" />
+    </setting>
+    <setting propertyKey="batteryOutline" title="batteryOutlineDesc">
+   		<settingConfig type="boolean" />
+    </setting>
+</settings>

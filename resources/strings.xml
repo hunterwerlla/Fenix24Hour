@@ -1,0 +1,7 @@
+<strings>
+    <string id="AppName">24hourclock</string>
+    <string id="snapHoursDesc">snap hour hand to current hour instead of rotating normally (helps readability)</string>
+    <string id="secondsHandDesc">have a seconds hand</string>
+    <string id="digitalTimeDesc">include a digital time</string>
+    <string id="batteryOutlineDesc">draw an ugly outline around the battery</string>
+</strings>

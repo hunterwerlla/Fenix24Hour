@@ -1,0 +1,6 @@
+<properties>
+    <property id="snapHours" type="boolean">true</property>
+    <property id="secondsHand" type="boolean">false</property>
+    <property id="digitalTime" type="boolean">true</property>
+    <property id="batteryOutline" type="boolean">false</property>
+</properties>

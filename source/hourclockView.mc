@@ -135,7 +135,13 @@ class hourclockView extends Ui.WatchFace {
         // dc.drawBitmap( width * 0.75, height / 2 - 15, dndIcon);
 
         // Draw the hour. Convert it to minutes and compute the angle.
-        hourHand = (((clockTime.hour % 24) * 60) /* + clockTime.min*/);
+        //if snap hours is true, don't move based on minute
+        hourHand = null;
+        if(Application.getApp().getProperty("snapHours")){
+        	hourHand = (((clockTime.hour % 24) * 60));
+        } else {
+        	hourHand = (((clockTime.hour % 24) * 60) + clockTime.min);
+        }
         hourHand = hourHand / (24 * 60.0);
         hourHand = hourHand * Math.PI * 2;
         drawHand(dc, hourHand, 75, 8);
@@ -143,44 +149,61 @@ class hourclockView extends Ui.WatchFace {
         // Draw the minute
         minuteHand = (clockTime.min / 60.0) * Math.PI * 2;
         drawHand(dc, minuteHand, 90, 4);
-		/*
-        // Draw the second
-        if (isAwake) {
-            dc.setColor(Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT);
-            secondHand = (clockTime.sec / 60.0) * Math.PI * 2;
-            secondTail = secondHand - Math.PI;
-            drawHand(dc, secondHand, 60, 2);
-            drawHand(dc, secondTail, 20, 2);
-        }*/
+		
+        // Draw the second if turned on
+        if(Application.getApp().getProperty("secondsHand")) {
+	        if (isAwake) {
+	            dc.setColor(Gfx.COLOR_PURPLE, Gfx.COLOR_TRANSPARENT);
+	            var sh = (clockTime.sec / 60.0) * Math.PI * 2;
+	            var st = sh - Math.PI;
+	            drawHand(dc, sh, 75, 2);
+	            drawHand(dc, st, 15, 2);
+	        }
+        }
 
         // Draw the arbor
         dc.setColor( Gfx.COLOR_DK_GRAY , Gfx.COLOR_TRANSPARENT );
         dc.drawCircle(width / 2, height / 2, 6);
         dc.fillCircle(width / 2, height / 2, 6);
 
-        // Draw the date
-        dc.drawText(width / 2, (height / 4)-4, Gfx.FONT_MEDIUM, dateStr, Gfx.TEXT_JUSTIFY_CENTER);
+        
         //draw the digital time
-        dc.drawText(width / 2, (height / 2)-37, Gfx.FONT_MEDIUM, clockTime.min ,  Gfx.TEXT_JUSTIFY_CENTER);
-
+        if(Application.getApp().getProperty("digitalTime")){
+        	dc.drawText(width / 2, (height / 2)-37, Gfx.FONT_MEDIUM, clockTime.min ,  Gfx.TEXT_JUSTIFY_CENTER);
+        	// Draw the date
+        	dc.drawText(width / 2, (height / 4)-4, Gfx.FONT_MEDIUM, dateStr, Gfx.TEXT_JUSTIFY_CENTER);
+		} else {
+			// Draw the date lower
+        	dc.drawText(width / 2, (height / 2)-37, Gfx.FONT_MEDIUM, dateStr, Gfx.TEXT_JUSTIFY_CENTER);
+		}
 		//draw the HR icon
-		var tmphrHist =  AM.getHeartRateHistory(1, true);
-		var tmphr = tmphrHist.next().heartRate;
+		var tmphr = null;
+		if(AM has :getHeartRateHistory){
+			var tmphrHist =  AM.getHeartRateHistory(1, true);
+			tmphr = tmphrHist.next().heartRate;
+		} 
+		//only draw heart rate if valid, otherwise don't even draw icon
 		if (tmphr != null && tmphr < 250) {
 			hr = tmphr;
+			var hrIconOffset = 0;
+			if(hr < 100){
+				hrIconOffset = width / 2 -38;
+			} else {
+				hrIconOffset = width / 2 -40;
+			}
+			dc.drawText(width / 2-12, (height / 2)+20, Gfx.FONT_XTINY, hr, Gfx.TEXT_JUSTIFY_CENTER);
+			dc.drawBitmap(hrIconOffset,(height / 2)+28,hrIcon);
 		}
-		var hrIconOffset = 0;
-		if(hr < 100){
-			hrIconOffset = width / 2 -38;
-		} else {
-			hrIconOffset = width / 2 -40;
-		}
-		dc.drawText(width / 2-12, (height / 2)+20, Gfx.FONT_XTINY, hr, Gfx.TEXT_JUSTIFY_CENTER);
-		dc.drawBitmap(hrIconOffset,(height / 2)+28,hrIcon);
+		
 		var battery = Sys.getSystemStats().battery.toLong();
+		//draw the battery outline, if applicable
+		if(Application.getApp().getProperty("batteryOutline")) {
+			dc.drawBitmap(width / 2+6, (height / 2)+22, batteryOutline);
+		} else {
+			battery += "%";
+		}
 		//draw the battery
-		dc.drawText(width / 2 +22,(height / 2)+20, Gfx.FONT_XTINY, battery ,  Gfx.TEXT_JUSTIFY_CENTER);
-		dc.drawBitmap(width / 2+6, (height / 2)+22, batteryOutline);
+		dc.drawText(width / 2 +22,(height / 2)+20, Gfx.FONT_XTINY, battery,  Gfx.TEXT_JUSTIFY_CENTER);
 		//draw  event stuff
 		if(dndIcon != null && Sys.getDeviceSettings().doNotDisturb){
 			dc.drawBitmap(width / 2 +1,(height / 2)+50,dndIcon);
@@ -188,7 +211,7 @@ class hourclockView extends Ui.WatchFace {
 		if(phoneIcon != null && Sys.getDeviceSettings().phoneConnected ){
 			dc.drawBitmap(width / 2 -31,(height / 2)+50,phoneIcon);
 		}
-		if(dndIcon != null && Sys.getDeviceSettings().notificationCount > 0 ){
+		if(notificationIcon != null && Sys.getDeviceSettings().notificationCount > 0 ){
 			dc.drawBitmap(width / 2 -16,(height / 2)+50,notificationIcon);
 		}
 		// Draw the numbers
