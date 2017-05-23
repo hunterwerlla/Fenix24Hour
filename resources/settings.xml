@@ -1,14 +1,14 @@
 <settings>
-    <setting propertyKey="snapHours" title="snapHoursDesc">
+    <setting propertyKey="@Properties.snapHours" title="@Strings.snapHoursDesc">
    	 	<settingConfig type="boolean" />
     </setting>
-   	<setting propertyKey="secondsHand" title="secondsHandDesc">
+   	<setting propertyKey="@Properties.secondsHand" title="@Strings.secondsHandDesc">
    		<settingConfig type="boolean" />
     </setting>
-    <setting propertyKey="digitalTime" title="digitalTimeDesc">
+    <setting propertyKey="@Properties.digitalTime" title="@Strings.digitalTimeDesc">
    		<settingConfig type="boolean" />
     </setting>
-    <setting propertyKey="batteryOutline" title="batteryOutlineDesc">
+    <setting propertyKey="@Properties.batteryOutline" title="@Strings.batteryOutlineDesc">
    		<settingConfig type="boolean" />
     </setting>
 </settings>

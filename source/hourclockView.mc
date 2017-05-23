@@ -109,7 +109,7 @@ class hourclockView extends Ui.WatchFace {
     	//Convert it to minutes and compute the angle.
         //if snap hours is true, don't move based on minute
         var hourHand = null;
-        if(Application.getApp().getProperty("snapHours")){
+        if(Application.getApp().getProperty("@Properties.snapHours")){
         	hourHand = (((clockTime.hour % 24) * 60));
         } else {
         	hourHand = (((clockTime.hour % 24) * 60) + clockTime.min);
@@ -126,7 +126,7 @@ class hourclockView extends Ui.WatchFace {
     
     function drawSecondsHand(dc,height,width,clockTime){
         // Draw the second if turned on
-        if(Application.getApp().getProperty("secondsHand")) {
+        if(Application.getApp().getProperty("@Properties.secondsHand")) {
 	        if (isAwake) {            
 	            var sh = (clockTime.sec / 60.0) * Math.PI * 2;
 	            var st = sh - Math.PI;
@@ -208,7 +208,7 @@ class hourclockView extends Ui.WatchFace {
 		var battery = Sys.getSystemStats().battery.toLong();
 		var tmphr = null;		
 		//draw the battery outline, if applicable
-		if(Application.getApp().getProperty("batteryOutline")) {
+		if(Application.getApp().getProperty("@Properties.batteryOutline")) {
 			dc.drawBitmap(width / 2+6, (height / 2)+22, batteryOutline);
 		} else {
 			battery += "%";
