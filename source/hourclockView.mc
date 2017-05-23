@@ -80,7 +80,7 @@ class hourclockView extends Ui.WatchFace {
     
     function drawDigitalTime(dc,width,height,clockTime){
     	dc.setColor( Gfx.COLOR_DK_GRAY , Gfx.COLOR_TRANSPARENT );
-        if(Application.getApp().getProperty("@Properties.digitalTime")){
+        if(Application.getApp().getProperty("digitalTime")){
         	dc.drawText(width / 2, (height / 2)-37, Gfx.FONT_MEDIUM, clockTime.min, Gfx.TEXT_JUSTIFY_CENTER);
         }
     }
@@ -88,7 +88,7 @@ class hourclockView extends Ui.WatchFace {
     function drawDate(dc,width,height,info){
         dc.setColor( Gfx.COLOR_DK_GRAY , Gfx.COLOR_TRANSPARENT );
     	var dateStr = Lang.format("$1$ $2$ $3$", [info.day_of_week, info.month, info.day]);
-        if(Application.getApp().getProperty("@Properties.digitalTime")){
+        if(Application.getApp().getProperty("digitalTime")){
         	dc.drawText(width / 2, (height / 4)-4, Gfx.FONT_MEDIUM, dateStr, Gfx.TEXT_JUSTIFY_CENTER);
 		} else {// Draw the date lower
         	dc.drawText(width / 2, (height / 2)-37, Gfx.FONT_MEDIUM, dateStr, Gfx.TEXT_JUSTIFY_CENTER);
@@ -109,7 +109,7 @@ class hourclockView extends Ui.WatchFace {
     	//Convert it to minutes and compute the angle.
         //if snap hours is true, don't move based on minute
         var hourHand = null;
-        if(Application.getApp().getProperty("@Properties.snapHours")){
+        if(Application.getApp().getProperty("snapHours")){
         	hourHand = (((clockTime.hour % 24) * 60));
         } else {
         	hourHand = (((clockTime.hour % 24) * 60) + clockTime.min);
@@ -126,7 +126,7 @@ class hourclockView extends Ui.WatchFace {
     
     function drawSecondsHand(dc,height,width,clockTime){
         // Draw the second if turned on
-        if(Application.getApp().getProperty("@Properties.secondsHand")) {
+        if(Application.getApp().getProperty("secondsHand")) {
 	        if (isAwake) {            
 	            var sh = (clockTime.sec / 60.0) * Math.PI * 2;
 	            var st = sh - Math.PI;
@@ -156,7 +156,6 @@ class hourclockView extends Ui.WatchFace {
     }
 
     // Draw the hash mark symbols on the watch
-    // @param dc Device context
     function drawHashMarks(dc,width,height) {
         var sX, sY;
         var eX, eY;
@@ -164,7 +163,7 @@ class hourclockView extends Ui.WatchFace {
         var innerRad = outerRad - 10;
         
         dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_TRANSPARENT);
-        // Loop through each hour block
+        // Loop through each hour block, 24 in all
         for (var i = Math.PI / 12; i <= 2 * Math.PI; i += (Math.PI / 12)) {
             sY = outerRad + innerRad * Math.sin(i);
             eY = outerRad + outerRad * Math.sin(i);
@@ -208,7 +207,7 @@ class hourclockView extends Ui.WatchFace {
 		var battery = Sys.getSystemStats().battery.toLong();
 		var tmphr = null;		
 		//draw the battery outline, if applicable
-		if(Application.getApp().getProperty("@Properties.batteryOutline")) {
+		if(Application.getApp().getProperty("batteryOutline")) {
 			dc.drawBitmap(width / 2+6, (height / 2)+22, batteryOutline);
 		} else {
 			battery += "%";
