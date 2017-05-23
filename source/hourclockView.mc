@@ -225,7 +225,7 @@ class hourclockView extends Ui.WatchFace {
 		if(notificationIcon != null && Sys.getDeviceSettings().notificationCount > 0 ){
 			dc.drawBitmap(width / 2 -16,(height / 2)+50,notificationIcon);
 		}
-		//draw the HR icon
+		//get hr
 		if(AM has :getHeartRateHistory){
 			var tmphrHist =  AM.getHeartRateHistory(1, true);
 			tmphr = tmphrHist.next().heartRate;
@@ -235,12 +235,12 @@ class hourclockView extends Ui.WatchFace {
 			hr = tmphr;
 			var hrIconOffset = 0;
 			if(hr < 100){
-				hrIconOffset = width / 2 -38;
-			} else {
 				hrIconOffset = width / 2 -40;
+			} else {
+				hrIconOffset = width / 2 -42;
 			}
-			dc.drawText(width / 2-12, (height / 2)+20, Gfx.FONT_XTINY, hr, Gfx.TEXT_JUSTIFY_CENTER);
-			dc.drawBitmap(hrIconOffset,(height / 2)+28,hrIcon);
+			dc.drawText((width/2) - 13, (height/2) + 20, Gfx.FONT_XTINY, hr, Gfx.TEXT_JUSTIFY_CENTER);
+			dc.drawBitmap(hrIconOffset, (height/2) + 28, hrIcon);
 		}
 	}
 
